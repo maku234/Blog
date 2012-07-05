@@ -1,0 +1,77 @@
+@CHARSET "ISO-8859-1";
+
+.error {
+	color: red;
+}
+
+
+body {
+	text-align: center;
+	background-color: #E0E0E0;
+	word-wrap:break-word
+}
+h1 {
+	color: #006363;
+}
+h2 {
+	color: #5CCCCC;
+}
+h3 {
+	color: #5CCCCC;
+}
+a:link {
+	
+	color: #5CCCCC;
+}
+a:visited {
+	color: #5CCCCC;
+	
+}
+.center-table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.content {
+	text-align: left;
+	width: 1018px;
+	
+	margin-left: auto;
+	margin-right: auto;
+	background-color: white;
+	word-wrap: break-word;
+}
+
+
+
+.menu-centered {
+	
+	padding: 8px;
+	margin-bottom: 10px;
+}
+
+.menu-centered ul {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+.menu-centered li {
+	display: inline;
+	list-style: none;
+	margin: 0 0 .2em 0;
+}
+
+.menu-centered a {
+	font: normal 12px/24px Arial;
+	color: #099;
+	text-decoration: none;
+	width: 0em;
+	padding: .8em .9em;
+	background: #006363;
+}
+
+.menu-centered a:hover {
+	background: #099;
+	color: #006363;
+}

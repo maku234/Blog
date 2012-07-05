@@ -1,0 +1,1 @@
+Admin page username is admin and password is test
