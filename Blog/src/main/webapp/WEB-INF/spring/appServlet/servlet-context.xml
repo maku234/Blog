@@ -31,23 +31,7 @@
 
 	 <context:property-placeholder location="/WEB-INF/classes/database.properties" />
 
-	<beans:bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<beans:property name="dataSource" ref="dataSource" />
-		<beans:property name="packagesToScan" value="com.margus.blog" />
-		<beans:property name="hibernateProperties">
-			<beans:props>
-				<beans:prop key="hibernate.dialect">
-					 ${hibernate.dialect}
-				</beans:prop>
-				<beans:prop key="hibernate.hbm2ddl.auto">
-					${hibernate.hbm2ddl.auto}
-				</beans:prop>
-				<beans:prop key="hibernate.show_sql">${hibernate.show_sql}</beans:prop>
-				
-			</beans:props>
-		</beans:property>
-	</beans:bean>
+	
 	<beans:bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<beans:property name="sessionFactory" ref="sessionFactory" />

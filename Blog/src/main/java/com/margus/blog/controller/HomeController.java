@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.margus.blog.domain.BlogPost;
+import com.margus.blog.domain.Comment;
 import com.margus.blog.service.BlogService;
 
 /**
@@ -60,18 +61,40 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
-	public String editPostFromForm(@PathVariable("id") int id,Model model) {
+	public String viewPost(@PathVariable("id") int id,Model model) {
 
 		BlogPost post = blogService.getPostById(id);
 		if(post == null){
 			return "redirect:/";
 		}else{
-			model.addAttribute("post", blogService.getPostById(id));
+			model.addAttribute("post", post);
+			model.addAttribute("comment", new Comment());
+		}
+
+		
+		return "viewPost";
+	}
+
+	@RequestMapping(value = "/view/{id}", method = RequestMethod.POST)
+	public String addCommentToPost(@PathVariable("id") int id,Model model,@ModelAttribute("comment") @Validated Comment comment,BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
+
+			return "viewPost";
+		}
+		Calendar calendar = Calendar.getInstance();
+		Date now = calendar.getTime();
+		comment.setDate(new Timestamp(now.getTime()));
+		blogService.addComment(id, comment);
+		BlogPost post = blogService.getPostById(id);
+		if(post == null){
+			return "redirect:/";
+		}else{
+			model.addAttribute("post", post);
+			model.addAttribute("comment", new Comment());
 		}
 
 		return "viewPost";
 	}
-
-	
 
 }

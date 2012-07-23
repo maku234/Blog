@@ -3,6 +3,7 @@ package com.margus.blog.service;
 import java.util.List;
 
 import com.margus.blog.domain.BlogPost;
+import com.margus.blog.domain.Comment;
 
 public interface BlogService {
 
@@ -13,4 +14,6 @@ public interface BlogService {
 	public void updatePost(BlogPost post);
 	public List<BlogPost> getRecentPosts(int count);
 	public List<BlogPost> getAllPosts();
+	public void addComment(int postId,Comment comment);
+	public void deleteComment(Comment comment);
 }

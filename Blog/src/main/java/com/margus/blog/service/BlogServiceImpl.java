@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.margus.blog.dao.BlogDAO;
 import com.margus.blog.domain.BlogPost;
+import com.margus.blog.domain.Comment;
 
 @Service
 @Repository
@@ -59,6 +60,18 @@ public class BlogServiceImpl implements BlogService {
 			deletePost(post);
 		}
 
+	}
+
+
+	@Override
+	public void deleteComment(Comment comment) {
+		blogDAO.deleteComment(comment);
+		
+	}
+
+	@Override
+	public void addComment(int postId, Comment comment) {
+		blogDAO.addComment(postId, comment);
 	}
 
 }
