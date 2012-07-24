@@ -101,5 +101,14 @@ public class AdminController {
 		
 		
 	}
+	
+	@RequestMapping(value = "/edit/{post_id}/delete/{commend_id}", method = RequestMethod.GET)
+	public String deleteComment(@PathVariable("post_id") int post_id,@PathVariable("commend_id") int commend_id){
+		
+		blogService.deleteComment(commend_id);
+		return "redirect:/admin/edit/"+post_id;
+		
+		
+	}
 }
 

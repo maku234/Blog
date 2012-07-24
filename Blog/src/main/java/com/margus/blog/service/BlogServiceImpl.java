@@ -62,16 +62,23 @@ public class BlogServiceImpl implements BlogService {
 
 	}
 
-
 	@Override
-	public void deleteComment(Comment comment) {
-		blogDAO.deleteComment(comment);
-		
+	public void deleteComment(int id) {
+		Comment comment = getCommentById(id);
+		if (comment != null) {
+			blogDAO.deleteComment(comment);
+		}
+
 	}
 
 	@Override
 	public void addComment(int postId, Comment comment) {
 		blogDAO.addComment(postId, comment);
+	}
+
+	@Override
+	public Comment getCommentById(int id) {
+		return blogDAO.getCommandById(id);
 	}
 
 }

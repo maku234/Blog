@@ -29,7 +29,7 @@
 		<h2>Comments:</h2>
 		<c:forEach var="comment" items="${post.getComments()}">
 			<div>
-				<h3>${comment.getAdderName()}</h3>
+				<h4>${comment.getAdderName()}</h4>
 			</div>
 			<div>${comment.getDate()}</div>
 			<br />

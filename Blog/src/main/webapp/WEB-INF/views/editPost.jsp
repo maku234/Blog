@@ -33,16 +33,18 @@
 		<table class="center-table">
 
 			<tr>
-				<td><form:label path="title"><h3>Title:</h3></form:label> <form:errors
-						path="title" cssClass="error" /></td>
+				<td><form:label path="title">
+						<h3>Title:</h3>
+					</form:label> <form:errors path="title" cssClass="error" /></td>
 			</tr>
 			<tr>
 				<td><form:input path="title" size="105" /></td>
 			</tr>
 
 			<tr>
-				<td><form:label path="text"><h3>Text:</h3></form:label> <form:errors
-						path="text" cssClass="error" /></td>
+				<td><form:label path="text">
+						<h3>Text:</h3>
+					</form:label> <form:errors path="text" cssClass="error" /></td>
 			</tr>
 			<tr>
 				<td><form:textarea path="text" cols="80" rows="20" /></td>
@@ -52,6 +54,17 @@
 
 		<input type="submit" value="Save" />
 	</form:form>
-
+	<div class="content">
+	<h2>Comments:</h2>
+	<c:forEach var="comment" items="${post.getComments()}">
+		<div>
+			<h4>${comment.getAdderName()}</h4> 
+		</div>
+		<div>${comment.getDate()}</div>
+		<br />
+		<div>${comment.getCommentText()}</div>
+		<a href="${post.getId()}/delete/${comment.getId()}">Delete</a>
+	</c:forEach>
+	</div>
 </body>
 </html>

@@ -16,4 +16,5 @@ public interface BlogDAO {
 	
 	public void addComment(int postId, Comment comment);
 	public void deleteComment(Comment comment);
+	public Comment getCommandById(int id);
 }
