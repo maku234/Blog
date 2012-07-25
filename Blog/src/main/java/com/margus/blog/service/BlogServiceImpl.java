@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.margus.blog.dao.BlogDAO;
 import com.margus.blog.domain.BlogPost;
 import com.margus.blog.domain.Comment;
+import com.margus.blog.domain.Tag;
 
 @Service
 @Repository
@@ -79,6 +80,23 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public Comment getCommentById(int id) {
 		return blogDAO.getCommandById(id);
+	}
+
+	@Override
+	public void addTag(Tag tag) {
+		blogDAO.addTag(tag);
+		
+	}
+
+	@Override
+	public Tag getTagByName(String name) {
+		return blogDAO.getTagByName(name);
+	}
+
+	@Override
+	public void updateTag(Tag tag) {
+		blogDAO.updateTag(tag);
+		
 	}
 
 }

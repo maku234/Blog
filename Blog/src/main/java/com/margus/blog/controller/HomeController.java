@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.margus.blog.domain.BlogPost;
 import com.margus.blog.domain.Comment;
+import com.margus.blog.domain.Tag;
 import com.margus.blog.service.BlogService;
 
 /**
@@ -46,14 +47,9 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
+		
 
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
-				DateFormat.LONG, locale);
-
-		String formattedDate = dateFormat.format(date);
-
-		model.addAttribute("serverTime", formattedDate);
+		
 		model.addAttribute("posts", blogService.getRecentPosts(RECENT_POSTS));
 		model.addAttribute("max_lenght", POST_LENGHT);
 		
@@ -97,4 +93,20 @@ public class HomeController {
 		return "viewPost";
 	}
 
+	@RequestMapping(value = "/tag/{tagName}", method = RequestMethod.GET)
+	public String viewTagPosts(@PathVariable("tagName") String tagName,Model model) {
+
+		Tag tag = blogService.getTagByName(tagName);
+		if(tag == null){
+			return "redirect:/";
+		}else{
+			model.addAttribute("tagName", tagName);
+			model.addAttribute("posts", tag.getPosts());
+			model.addAttribute("max_lenght", POST_LENGHT);
+			
+			
+		}
+		return "viewPostsByTag";
+	}
+	
 }

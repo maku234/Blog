@@ -25,7 +25,13 @@
 		<div>${post.getDate()}</div>
 		<br />
 		<div>${post.getText()}</div>
-
+		<div>
+		<h3>Tags:</h3>
+				<c:forEach var="tag" items="${post.getTags()}">
+					<a href="../tag/${tag.getName()}">${tag.getName()}</a>
+					
+				</c:forEach>
+		</div>
 		<h2>Comments:</h2>
 		<c:forEach var="comment" items="${post.getComments()}">
 			<div>

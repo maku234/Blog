@@ -29,7 +29,7 @@
 	<h1>Add new post</h1>
 
 
-	<form:form modelAttribute="post" method="POST" action="add">
+	<form:form modelAttribute="post" method="POST" action="add" >
 		<table class="center-table">
 
 			<tr>
@@ -47,7 +47,14 @@
 			<tr>
 				<td><form:textarea path="text" cols="80" rows="20" /></td>
 			</tr>
-
+			
+			<tr>
+				<td><form:label path="" ><h3>Tags:</h3></form:label> <form:errors
+					cssClass="error" /></td>
+			</tr>
+			<tr>
+				<td><form:input name="tags" path="" size="105" /></td>
+			</tr>
 		</table>
 
 		<input type="submit" value="Add" />

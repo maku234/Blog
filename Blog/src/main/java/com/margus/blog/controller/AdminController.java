@@ -1,11 +1,17 @@
 package com.margus.blog.controller;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -16,8 +22,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.margus.blog.domain.BlogPost;
+import com.margus.blog.domain.Tag;
 import com.margus.blog.service.BlogService;
 
 @Controller
@@ -27,7 +35,7 @@ public class AdminController {
 	private BlogService blogService;
 	
 	private final int POST_LENGHT = 200;
-	
+	private static final Logger logger = Logger.getLogger(AdminController.class);
 	
 	@Autowired
 	public AdminController(BlogService blogService) {
@@ -52,17 +60,26 @@ public class AdminController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addPostFromForm(
 			@ModelAttribute("post") @Validated BlogPost post,
-			BindingResult bindingResult, Model model) {
+			BindingResult bindingResult, Model model,@RequestParam("tags") String tags) {
 
 		if (bindingResult.hasErrors()) {
 
 			return "addNewPost";
 		}
+		
+
 		Calendar calendar = Calendar.getInstance();
 		Date now = calendar.getTime();
 		post.setDate(new Timestamp(now.getTime()));
+		
+		
+		
+		
+		
+		
+		post.setTags(getTagListFromString(tags));
 		blogService.addPost(post);
-
+		
 		return "redirect:/admin/";
 	}
 	
@@ -74,13 +91,14 @@ public class AdminController {
 			return "redirect:/admin/";
 		}else{
 			model.addAttribute("post", post);
+			model.addAttribute("taglist", getStringOfTagNamesFromList(post.getTags()	));
 		}
 		return "editPost";
 	}
 	
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
 	public String editPostFromForm(@PathVariable("id") int id,@ModelAttribute("post") @Validated BlogPost post,
-			BindingResult bindingResult) {
+			BindingResult bindingResult,@RequestParam("tags") String tags) {
 		if (bindingResult.hasErrors()) {
 
 			return "editPost";
@@ -88,6 +106,7 @@ public class AdminController {
 		Calendar calendar = Calendar.getInstance();
 		Date now = calendar.getTime();
 		post.setDate(new Timestamp(now.getTime()));
+		post.setTags(getTagListFromString(tags));
 		blogService.updatePost(post);
 
 		return "redirect:/admin/";
@@ -109,6 +128,45 @@ public class AdminController {
 		return "redirect:/admin/edit/"+post_id;
 		
 		
+	}
+	
+	/**
+	 * Return list of tags from string of tag names, adds new tags to database
+	 * @param tagNames
+	 * @return
+	 */
+	private List<Tag> getTagListFromString(String tagNames){
+		String[] tag_list = tagNames.split(" ");
+		List<Tag> tagList = new ArrayList<Tag>();
+		Set<String> addedTags = new HashSet<String>();
+		for (String tag_name : tag_list) {
+			
+			if(addedTags.contains(tag_name)){
+				continue;
+			}else{
+				addedTags.add(tag_name);
+			}
+			Tag tag = blogService.getTagByName(tag_name);
+			if(tag==null){
+				tag = new Tag(tag_name);
+				
+				
+				blogService.addTag(tag);
+			}
+			
+			tagList.add(tag);
+			
+		}
+		return tagList;
+	}
+	
+	private String getStringOfTagNamesFromList(List<Tag> tags){
+		String tagNames = "";
+		for (Tag tag : tags) {
+			tagNames += tag+" ";
+			
+		}
+		return tagNames;
 	}
 }
 

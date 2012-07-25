@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.margus.blog.domain.BlogPost;
 import com.margus.blog.domain.Comment;
+import com.margus.blog.domain.Tag;
 
 @Repository
 public class HibernateBlogDAO implements BlogDAO {
@@ -85,6 +86,30 @@ public class HibernateBlogDAO implements BlogDAO {
 		query.executeUpdate();
 		currentSession().delete(comment);
 
+	}
+
+	@Override
+	public void addTag(Tag tag) {
+		currentSession().save(tag);
+		
+	}
+
+	@Override
+	public Tag getTagByName(String name) {
+		return (Tag)currentSession().get(Tag.class,name);
+	}
+
+	@Override
+	public void updateTag(Tag tag) {
+		
+		currentSession().update(tag);
+		
+	}
+
+	@Override
+	public List<Tag> getAllTags() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

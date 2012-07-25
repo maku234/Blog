@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.margus.blog.domain.BlogPost;
 import com.margus.blog.domain.Comment;
+import com.margus.blog.domain.Tag;
 
 public interface BlogDAO {
 
@@ -17,4 +18,9 @@ public interface BlogDAO {
 	public void addComment(int postId, Comment comment);
 	public void deleteComment(Comment comment);
 	public Comment getCommandById(int id);
+	
+	public void addTag(Tag tag);
+	public Tag getTagByName(String name);
+	public void updateTag(Tag tag);
+	public List<Tag> getAllTags();
 }

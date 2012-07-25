@@ -23,9 +23,10 @@
 
 
 	<ol>
+		<div class="content">
 		<c:forEach var="post" items="${posts}">
 			
-			<div class="content">
+			
 				<div>
 					<h2>
 						<a href="view/${post.getId()}">${post.getTitle()}</a>
@@ -46,8 +47,13 @@
 					</c:choose>
 
 				</div>
-
-			</div>
+				Tags:
+				${post.getTags().size()}
+				<c:forEach var="tag" items="${post.getTags()}">
+					<a href="tag/${tag.getName()}">${tag.getName()}</a>
+					
+				</c:forEach>
+			
 
 
 
@@ -55,7 +61,7 @@
 
 			<br />
 		</c:forEach>
-
+		</div>
 
 	</ol>
 
