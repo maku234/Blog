@@ -23,4 +23,5 @@ public interface BlogDAO {
 	public Tag getTagByName(String name);
 	public void updateTag(Tag tag);
 	public List<Tag> getAllTags();
+	public List<Tag> getTagsLike(String text);
 }

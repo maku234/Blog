@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.margus.blog.domain.BlogPost;
 import com.margus.blog.domain.Tag;
@@ -53,7 +54,7 @@ public class AdminController {
 	public String addPostFromForm(Model model) {
 
 		model.addAttribute("post", new BlogPost());
-
+		model.addAttribute("taglist", "");
 		return "addNewPost";
 	}
 
@@ -63,7 +64,7 @@ public class AdminController {
 			BindingResult bindingResult, Model model,@RequestParam("tags") String tags) {
 
 		if (bindingResult.hasErrors()) {
-
+			model.addAttribute("taglist", tags);
 			return "addNewPost";
 		}
 		
@@ -130,6 +131,17 @@ public class AdminController {
 		
 	}
 	
+	@RequestMapping(value="/get_tags",method=RequestMethod.GET,headers ={"Accept=*/*"})
+	public  @ResponseBody List<String> getTagsThatStartWith(@RequestParam("term") String start){
+		
+		List<String> returnList = new ArrayList<String>();
+		List<Tag> tags = blogService.getTagsLike(start+"%");
+		for (Tag tag : tags) {
+			returnList.add(tag.getName());
+		}
+		return returnList;
+	}
+	
 	/**
 	 * Return list of tags from string of tag names, adds new tags to database
 	 * @param tagNames
@@ -141,7 +153,8 @@ public class AdminController {
 		Set<String> addedTags = new HashSet<String>();
 		for (String tag_name : tag_list) {
 			
-			if(addedTags.contains(tag_name)){
+			logger.info("tag name"+tag_name+"-");
+			if(tag_name.equals("") || addedTags.contains(tag_name)){
 				continue;
 			}else{
 				addedTags.add(tag_name);

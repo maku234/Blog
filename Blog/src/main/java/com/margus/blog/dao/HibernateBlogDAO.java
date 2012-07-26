@@ -2,9 +2,12 @@ package com.margus.blog.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -47,6 +50,10 @@ public class HibernateBlogDAO implements BlogDAO {
 
 	public List<BlogPost> getRecentPosts(int count) {
 
+		/*Criteria criteria = currentSession().createCriteria(BlogPost.class).addOrder(Order.desc("date"));
+		criteria.setFirstResult(0);
+		criteria.setMaxResults(count);
+		return criteria.list();*/
 		Query query = currentSession().createQuery(
 				"FROM BlogPost AS Post ORDER BY Post.date DESC");
 		query.setFirstResult(0);
@@ -56,6 +63,9 @@ public class HibernateBlogDAO implements BlogDAO {
 
 	@Override
 	public List<BlogPost> getAllPosts() {
+		
+		/*Criteria criteria = currentSession().createCriteria(BlogPost.class).addOrder(Order.desc("date"));
+		return criteria.list();*/
 		return (List<BlogPost>) currentSession().createQuery(
 				"FROM BlogPost AS Post ORDER BY Post.date DESC").list();
 	}
@@ -108,8 +118,17 @@ public class HibernateBlogDAO implements BlogDAO {
 
 	@Override
 	public List<Tag> getAllTags() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<Tag>) currentSession().createQuery(
+				"FROM Tag").list();
+	}
+
+	@Override
+	public List<Tag> getTagsLike(String text) {
+		
+		Criteria criteria = currentSession().createCriteria(Tag.class);
+		criteria.add(Restrictions.like("name", text));
+		
+		return criteria.list();
 	}
 
 }

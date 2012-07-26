@@ -99,4 +99,14 @@ public class BlogServiceImpl implements BlogService {
 		
 	}
 
+	@Override
+	public List<Tag> getAllTags() {
+		return blogDAO.getAllTags();
+	}
+
+	@Override
+	public List<Tag> getTagsLike(String text) {
+		return blogDAO.getTagsLike(text);
+	}
+
 }

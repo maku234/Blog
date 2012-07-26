@@ -8,6 +8,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css"
 	href="/blog/resources/css/style.css" />
+<link rel="stylesheet" type="text/css"
+	href="/blog/resources/css/ui-lightness/jquery-ui-1.8.22.custom.css">
+<script type="text/javascript"
+	src="/blog/resources/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript"
+	src="/blog/resources/js/jquery-ui-1.8.22.custom.min.js"></script>
+<script type="text/javascript"
+	src="/blog/resources/js/tags_autocompletion.js"></script>
 <title>Add new post</title>
 </head>
 <body>
@@ -29,36 +37,42 @@
 	<h1>Add new post</h1>
 
 
-	<form:form modelAttribute="post" method="POST" action="add" >
+	<form:form modelAttribute="post" method="POST" action="add">
 		<table class="center-table">
 
 			<tr>
-				<td><form:label path="title"><h3>Title:</h3></form:label> <form:errors
-						path="title" cssClass="error" /></td>
+				<td><form:label path="title">
+						<h3>Title:</h3>
+					</form:label> <form:errors path="title" cssClass="error" /></td>
 			</tr>
 			<tr>
 				<td><form:input path="title" size="105" /></td>
 			</tr>
 
 			<tr>
-				<td><form:label path="text"><h3>Text:</h3></form:label> <form:errors
-						path="text" cssClass="error" /></td>
+				<td><form:label path="text">
+						<h3>Text:</h3>
+					</form:label> <form:errors path="text" cssClass="error" /></td>
 			</tr>
 			<tr>
 				<td><form:textarea path="text" cols="80" rows="20" /></td>
 			</tr>
-			
+
 			<tr>
-				<td><form:label path="" ><h3>Tags:</h3></form:label> <form:errors
-					cssClass="error" /></td>
+				<td><form:label path="">
+						<h3>Tags:</h3>
+					</form:label> <form:errors cssClass="error" /></td>
 			</tr>
-			<tr>
-				<td><form:input name="tags" path="" size="105" /></td>
-			</tr>
+			<div class="ui-widget">
+				<tr>
+					<td><form:input name="tags" path="" id="tags" size="105" value="${taglist}" /></td>
+				</tr>
+			</div>
 		</table>
 
 		<input type="submit" value="Add" />
 	</form:form>
 
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 package com.margus.blog.domain;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Posts")
-public class BlogPost {
+public class BlogPost implements Serializable {
 
 	@Id
 	@GeneratedValue
