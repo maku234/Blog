@@ -92,7 +92,7 @@ public class AdminController {
 			return "redirect:/admin/";
 		}else{
 			model.addAttribute("post", post);
-			model.addAttribute("taglist", getStringOfTagNamesFromList(post.getTags()	));
+			model.addAttribute("taglist", post.getStringOfTagNames());
 		}
 		return "editPost";
 	}
@@ -173,13 +173,6 @@ public class AdminController {
 		return tagList;
 	}
 	
-	private String getStringOfTagNamesFromList(List<Tag> tags){
-		String tagNames = "";
-		for (Tag tag : tags) {
-			tagNames += tag+" ";
-			
-		}
-		return tagNames;
-	}
+	
 }
 

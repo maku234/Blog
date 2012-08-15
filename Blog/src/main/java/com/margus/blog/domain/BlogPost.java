@@ -108,5 +108,15 @@ public class BlogPost implements Serializable {
 		}
 		return text.substring(0, length);
 	}
+	
+	@Transient
+	public String getStringOfTagNames(){
+		String tagNames = "";
+		for (Tag tag : tags) {
+			tagNames += tag+" ";
+			
+		}
+		return tagNames;
+	}
 
 }
