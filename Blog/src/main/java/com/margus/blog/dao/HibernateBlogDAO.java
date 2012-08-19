@@ -7,6 +7,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -55,16 +57,16 @@ public class HibernateBlogDAO implements BlogDAO {
 
 	public List<BlogPost> getRecentPosts(int count) {
 
-		/*Criteria criteria = currentSession().createCriteria(BlogPost.class).addOrder(Order.desc("date"));
+		Criteria criteria = currentSession().createCriteria(BlogPost.class).addOrder(Order.desc("date"));
 		criteria.setFirstResult(0);
 		criteria.setMaxResults(count);
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//ei testinud veel seda 
-		return criteria.list();*/
-		Query query = currentSession().createQuery(
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); 
+		return criteria.list();
+		/*Query query = currentSession().createQuery(
 				"FROM BlogPost AS Post ORDER BY Post.date DESC");
 		query.setFirstResult(0);
 		query.setMaxResults(count);
-		return (List<BlogPost>) query.list();
+		return (List<BlogPost>) query.list();*/
 	}
 
 	@Override
@@ -141,6 +143,22 @@ public class HibernateBlogDAO implements BlogDAO {
 	public void deleteTag(Tag tag) {
 		currentSession().delete(tag);
 
+		
+	}
+
+	@Override
+	public int getPostsCount() {
+		return ((Number)currentSession().createCriteria(BlogPost.class).setProjection(Projections.rowCount()).uniqueResult()).intValue();
+		
+	}
+
+	@Override
+	public List<BlogPost> getPosts(int start, int count) {
+		Criteria criteria = currentSession().createCriteria(BlogPost.class).addOrder(Order.desc("date"));
+		criteria.setFirstResult(start);
+		criteria.setMaxResults(count);
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); 
+		return criteria.list();
 		
 	}
 

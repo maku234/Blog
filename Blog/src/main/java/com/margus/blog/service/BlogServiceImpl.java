@@ -115,4 +115,14 @@ public class BlogServiceImpl implements BlogService {
 		
 	}
 
+	@Override
+	public int getPostsCount() {
+		return blogDAO.getPostsCount();
+	}
+
+	@Override
+	public List<BlogPost> getPosts(int start, int count) {
+		return blogDAO.getPosts(start, count);
+	}
+
 }

@@ -15,6 +15,8 @@ public interface BlogService {
 	public void updatePost(BlogPost post);
 	public List<BlogPost> getRecentPosts(int count);
 	public List<BlogPost> getAllPosts();
+	public List<BlogPost> getPosts(int start,int count);
+	public int getPostsCount();
 	public void addComment(int postId,Comment comment);
 	public void deleteComment(int id);
 	public Comment getCommentById(int id);

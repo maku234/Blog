@@ -47,6 +47,7 @@ public class AdminController {
 	public String adminHome(Model model){
 		model.addAttribute("posts", blogService.getAllPosts());
 		model.addAttribute("max_lenght", POST_LENGHT);
+		logger.info(blogService.getPostsCount());
 		return "adminHome";
 	}
 	
