@@ -72,10 +72,11 @@ public class HibernateBlogDAO implements BlogDAO {
 	@Override
 	public List<BlogPost> getAllPosts() {
 		
-		/*Criteria criteria = currentSession().createCriteria(BlogPost.class).addOrder(Order.desc("date"));
-		return criteria.list();*/
-		return (List<BlogPost>) currentSession().createQuery(
-				"FROM BlogPost AS Post ORDER BY Post.date DESC").list();
+		Criteria criteria = currentSession().createCriteria(BlogPost.class).addOrder(Order.desc("date"));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return criteria.list();
+		/*return (List<BlogPost>) currentSession().createQuery(
+				"FROM BlogPost AS Post ORDER BY Post.date DESC").list();*/
 	}
 
 	@Override
@@ -126,8 +127,10 @@ public class HibernateBlogDAO implements BlogDAO {
 
 	@Override
 	public List<Tag> getAllTags() {
-		return (List<Tag>) currentSession().createQuery(
-				"FROM Tag").list();
+		Criteria criteria = currentSession().createCriteria(Tag.class);
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return criteria.list();
+		
 	}
 
 	@Override
@@ -160,6 +163,20 @@ public class HibernateBlogDAO implements BlogDAO {
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); 
 		return criteria.list();
 		
+	}
+
+	@Override
+	public List<Tag> getTags(int start, int count) {
+		Criteria criteria = currentSession().createCriteria(Tag.class);
+		criteria.setFirstResult(start);
+		criteria.setMaxResults(count);
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); 
+		return criteria.list();
+	}
+
+	@Override
+	public int getTagsCount() {
+		return ((Number)currentSession().createCriteria(Tag.class).setProjection(Projections.rowCount()).uniqueResult()).intValue();
 	}
 
 }

@@ -119,7 +119,18 @@ public class HomeController {
 	public String viewAllTags(Model model,
 			@RequestParam(required = false) String page) {
 
-		model.addAttribute("tags", blogService.getAllTags());
+		Paging<Tag> tagPaging = new Paging<Tag>(blogService.getTagsCount(), TAGS_ON_PAGE);
+		if(page!=null){
+			tagPaging.setCurrentPage(Integer.parseInt(page));
+			
+		}
+		
+		
+		tagPaging.setRowObjects(blogService.getTags(tagPaging
+				.getStartRowIndex(),tagPaging.getRowsOnPage()));
+
+		model.addAttribute("tagPaging", tagPaging);
+		
 
 		return "viewAllTags";
 	}

@@ -26,4 +26,6 @@ public interface BlogService {
 	public void updateTag(Tag tag);
 	public List<Tag> getAllTags();
 	public List<Tag> getTagsLike(String text);
+	public List<Tag> getTags(int start,int count);
+	public int getTagsCount();
 }

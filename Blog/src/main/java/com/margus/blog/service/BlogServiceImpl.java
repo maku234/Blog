@@ -125,4 +125,14 @@ public class BlogServiceImpl implements BlogService {
 		return blogDAO.getPosts(start, count);
 	}
 
+	@Override
+	public List<Tag> getTags(int start, int count) {
+		return blogDAO.getTags(start, count);
+	}
+
+	@Override
+	public int getTagsCount() {
+		return blogDAO.getTagsCount();
+	}
+
 }
