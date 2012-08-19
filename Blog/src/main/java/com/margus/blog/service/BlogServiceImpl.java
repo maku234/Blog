@@ -109,4 +109,10 @@ public class BlogServiceImpl implements BlogService {
 		return blogDAO.getTagsLike(text);
 	}
 
+	@Override
+	public void deleteTag(Tag tag) {
+		blogDAO.deleteTag(tag);
+		
+	}
+
 }

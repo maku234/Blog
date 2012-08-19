@@ -18,6 +18,14 @@
 
 		</ul>
 	</div>
+	<div class="menu-centered">
+		<ul>
+			<li><a href="posts">All posts</a></li>
+			<li><a href="tags"> All tags</a></li>
+			
+
+		</ul>
+	</div>
 	<h1>My Blog</h1>
 
 

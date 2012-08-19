@@ -45,7 +45,7 @@ public class HomeController {
 
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Model model) {
 		
 		
 
@@ -54,6 +54,11 @@ public class HomeController {
 		model.addAttribute("max_lenght", POST_LENGHT);
 		
 		return "home";
+	}
+	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String secondHome(){
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
@@ -109,4 +114,27 @@ public class HomeController {
 		return "viewPostsByTag";
 	}
 	
+	@RequestMapping(value = "/tags", method = RequestMethod.GET)
+	public String viewAllTags(Model model) {
+		
+		
+
+		
+		model.addAttribute("tags", blogService.getAllTags());
+		
+		
+		return "viewAllTags";
+	}
+	
+	@RequestMapping(value = "/posts", method = RequestMethod.GET)
+	public String viewAllPosts(Model model) {
+		
+		
+
+		
+		model.addAttribute("posts", blogService.getAllPosts());
+		model.addAttribute("max_lenght", POST_LENGHT);
+		
+		return "viewAllPosts";
+	}
 }

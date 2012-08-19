@@ -20,6 +20,7 @@ public interface BlogDAO {
 	public Comment getCommandById(int id);
 	
 	public void addTag(Tag tag);
+	public void deleteTag(Tag tag);
 	public Tag getTagByName(String name);
 	public void updateTag(Tag tag);
 	public List<Tag> getAllTags();

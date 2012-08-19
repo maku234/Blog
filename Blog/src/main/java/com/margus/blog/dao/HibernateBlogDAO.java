@@ -35,6 +35,11 @@ public class HibernateBlogDAO implements BlogDAO {
 	}
 
 	public void deletePost(BlogPost post) {
+		for(Tag tag : post.getTags()){
+			if(tag.getPostsCount()==1){
+				deleteTag(tag);
+			}
+		}
 		currentSession().delete(post);
 
 	}
@@ -53,6 +58,7 @@ public class HibernateBlogDAO implements BlogDAO {
 		/*Criteria criteria = currentSession().createCriteria(BlogPost.class).addOrder(Order.desc("date"));
 		criteria.setFirstResult(0);
 		criteria.setMaxResults(count);
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//ei testinud veel seda 
 		return criteria.list();*/
 		Query query = currentSession().createQuery(
 				"FROM BlogPost AS Post ORDER BY Post.date DESC");
@@ -129,6 +135,13 @@ public class HibernateBlogDAO implements BlogDAO {
 		criteria.add(Restrictions.like("name", text));
 		
 		return criteria.list();
+	}
+
+	@Override
+	public void deleteTag(Tag tag) {
+		currentSession().delete(tag);
+
+		
 	}
 
 }
